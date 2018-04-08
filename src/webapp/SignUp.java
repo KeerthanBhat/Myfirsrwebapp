@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 @WebServlet(name = "signup")
 public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,8 +23,8 @@ public class SignUp extends HttpServlet {
 
         User userOb = new User();
 
-        userOb.signupSuccess(request.getParameter("username"),request.getParameter("password"));
-        request.getRequestDispatcher("/welcome.jsp").forward(request, response);
+        userOb.signupSuccess(request.getParameter("username"),request.getParameter("password"),request.getParameter("email"));
+        request.getRequestDispatcher("/AuctionHomePage.jsp").forward(request, response);
     }
 
 

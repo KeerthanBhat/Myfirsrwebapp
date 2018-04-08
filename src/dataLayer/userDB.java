@@ -1,20 +1,65 @@
 package dataLayer;
-
 import java.sql.*;
 
-/**
- * Created by jonb on 04/04/17.
- */
 public class userDB {
 
-    // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/webapptutorial";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/Auction";
 
-    //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "Aa123456@1";
+    static final String USER = "#";
+    static final String PASS = "#";
 
+    public int retId(String username){
+        Connection conn = null;
+        Statement stmt = null;
+
+        int flag=0;int id=-1;
+        try {
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            System.out.println("Creating statement...");
+            stmt = conn.createStatement();
+            System.out.println("username = "+username);
+            String sql;
+            sql = "SELECT * FROM users WHERE user_name = \"" +
+                  username+"\"";
+
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                 id = rs.getInt("id");
+                System.out.println("after rs");
+                flag=1;
+            }
+
+        }
+            catch(SQLException se){
+                se.printStackTrace();
+            } catch(Exception e){
+                e.printStackTrace();
+            } finally{
+                try{
+                    if(stmt!=null)
+                        stmt.close();
+                } catch(SQLException se2){
+                }
+                try{
+                    if(conn!=null)
+                        conn.close();
+                }catch(SQLException se){
+                    se.printStackTrace();
+
+                }
+
+            System.out.println("Closing DB Connection - Goodbye!");
+                if (flag==1) return id;
+                else return 0;
+            }
+
+        }
 
     public boolean isValidUserLogin(String sUserName, String sUserPassword)
     {
@@ -25,114 +70,98 @@ public class userDB {
         boolean validLoginResult = false;
 
         try {
-            //STEP 2: Register JDBC driver
             Class.forName("com.mysql.jdbc.Driver");
 
-            //STEP 3: Open a connection
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
-            //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
            sql = "SELECT * FROM users WHERE user_name = \"" +
                    sUserName + "\" AND user_password = \"" + sUserPassword + "\"";
-            //sql = "SELECT * FROM users";
-            //System.out.println(sql);
 
             ResultSet rs = stmt.executeQuery(sql);
-           // while (rs.next()) {
-             //   System.out.println(rs.getInt(1) + rs.getString(2) + rs.getString(3));
 
-          //  }
-            //STEP 5: Extract data from result set
             if(rs.next()){
                validLoginResult = true;
             }
-            //STEP 6: Clean-up environment
+
             rs.close();
             stmt.close();
             conn.close();
         } catch(SQLException se){
-            //Handle errors for JDBC
+
             se.printStackTrace();
         } catch(Exception e){
-            //Handle errors for Class.forName
+
             e.printStackTrace();
         } finally{
-            //finally block used to close resources
+
             try{
                 if(stmt!=null)
                     stmt.close();
             } catch(SQLException se2){
-            }// nothing we can do
+            }
             try{
                 if(conn!=null)
                     conn.close();
             }catch(SQLException se){
                 se.printStackTrace();
-            }//end finally try
-        }//end try
+            }
+        }
         System.out.println("Closing DB Connection - Goodbye!");
 
         return validLoginResult;
 
     }
 
-    public void signup(String username , String password){
+    public void signup(String username , String password,String email){
 
         Connection conn = null;
         Statement stmt = null;
-       // boolean validLoginResult = false;
+
         System.out.println(username +" "+password);
 
         try {
-            //STEP 2: Register JDBC driver
+
             Class.forName("com.mysql.jdbc.Driver");
 
-            //STEP 3: Open a connection
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
-            //STEP 4: Execute a query
             System.out.println("Creating statement...");
              stmt = conn.createStatement();
-            String sql;
-           // String user_name = "hi";
-            //String user_password = "123";
-           // sql = "INSERT INTO users (user_name,user_password) VALUES (\""+user_name+"",""+user_password+")"; doesn't work
-          // sql = "INSERT INTO users (user_name,user_password) VALUES (username,password)"; doesn't work
-             sql = "INSERT INTO users (user_name,user_password) VALUES(\"" +username+"\","+"\""+password+"\")"; //worksssss*****
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO users (user_name,user_password,email_id) VALUES (?,?,?)");
+                    ps.setString(1,username);
+                    ps.setString(2,password);
+                    ps.setString(3,email);
 
-            System.out.println(sql);
-            stmt.executeUpdate(sql);
+                ps.executeUpdate();
             System.out.println("insert succ");
-          //  ResultSet rs = stmt.executeQuery(sql);
 
-            //rs.close();
             stmt.close();
             conn.close();
         } catch(SQLException se){
-            //Handle errors for JDBC
+
             se.printStackTrace();
         } catch(Exception e){
-            //Handle errors for Class.forName
+
             e.printStackTrace();
         } finally{
-            //finally block used to close resources
+
             try{
                 if(stmt!=null)
                     stmt.close();
             } catch(SQLException se2){
-            }// nothing we can do
+            }
             try{
                 if(conn!=null)
                     conn.close();
             }catch(SQLException se){
                 se.printStackTrace();
-            }//end finally try
-        }//end try
+            }
+        }
         System.out.println("Closing DB Connection - Goodbye!");
 
 
