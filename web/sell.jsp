@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>Sell</title>
 </head>
 <body>
 
@@ -34,6 +34,19 @@
         box-sizing: border-box;
         font-size: 14px;
     }
+    .form input[type="submit"] {
+        font-family: "Roboto", sans-serif;
+        color: #FFFFFF;
+        outline: 0;
+        background: #4CAF50;
+        width: 100%;
+        border: 0;
+        margin: 0 0 15px;
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
     .form button {
         font-family: "Roboto", sans-serif;
         text-transform: uppercase;
@@ -108,23 +121,38 @@
 </style>
 <div class="login-page">
     <div class="form">
-        <form class="register-form">
-            <input type="text" placeholder="name"/>
-            <input type="password" placeholder="password"/>
-            <input type="text" placeholder="email address"/>
-            <button>create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
-        </form>
-        <form class="login-form" action="/login " method="post">
-            <input type="text" placeholder="username" name="loginname"/>
-            <input type="password" placeholder="password" name="password"/>
-            <button>login</button>
-            <p class="message">Not registered? <a href="signup.jsp">Create an account</a></p>
-        </form>
+<form action="/sell" class="login-form" method="post" >
+    User Name:<br>
+    <input type="text" name="username">
+    <br>
+    Product name:<br>
+    <input type="text" name="product_name">
+    <br>
+    Product description:<br>
+    <input type="text" name="product_description">
+    <br>
+    Product Category:<br>
+    <input list="category" name="category">
+    <datalist id="category">
+        <option value="Electronics">
+        <option value="Vehicles">
+        <option value="Furniture">
+        <option value="Ads">
+        <option value="Others">
+
+    </datalist>
+    <br>
+    Base price:<br>
+    <input type="number" name="baseprice">
+    <br>
+    Auction duration in minutes:<br>
+    <input type="number" name="duration">
+    <br>
+    <input type="submit" value="Submit">
+</form>
     </div>
 </div>
+<p align="center" style="color: red">${errorMessage}</p>
 
-
-<p style="color: black;font-family:'DejaVu Sans Condensed' " align="center" >${errorMessage}</p>
 </body>
 </html>

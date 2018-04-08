@@ -1,9 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>Buy</title>
 </head>
-<body>
 
 <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:300);
@@ -34,6 +33,19 @@
         box-sizing: border-box;
         font-size: 14px;
     }
+    .form input[type="submit"] {
+        font-family: "Roboto", sans-serif;
+        color: #FFFFFF;
+        outline: 0;
+        background: #4CAF50;
+        width: 100%;
+        border: 0;
+        margin: 0 0 15px;
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
     .form button {
         font-family: "Roboto", sans-serif;
         text-transform: uppercase;
@@ -106,25 +118,56 @@
         -moz-osx-font-smoothing: grayscale;
     }
 </style>
+<body>
 <div class="login-page">
     <div class="form">
-        <form class="register-form">
-            <input type="text" placeholder="name"/>
-            <input type="password" placeholder="password"/>
-            <input type="text" placeholder="email address"/>
-            <button>create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
-        </form>
-        <form class="login-form" action="/login " method="post">
-            <input type="text" placeholder="username" name="loginname"/>
-            <input type="password" placeholder="password" name="password"/>
-            <button>login</button>
-            <p class="message">Not registered? <a href="signup.jsp">Create an account</a></p>
-        </form>
+        <script>
+            var captcha;
+
+            function generateCaptcha() {
+                var a = Math.floor((Math.random() * 10));
+                var b = Math.floor((Math.random() * 10));
+                var c = Math.floor((Math.random() * 10));
+                var d = Math.floor((Math.random() * 10));
+
+                captcha=a.toString()+b.toString()+c.toString()+d.toString();
+
+                document.getElementById("captcha").value = captcha;
+            }
+
+            function check(){
+                var input=document.getElementById("inputText").value;
+
+                if(input==captcha){
+                    alert("Equal");
+                }
+                else{
+                    alert("Not Equal");
+                }
+            }
+        </script>
+        <br>Enter the CAPTCHA:
+        <div class="captcha">
+            <input type="text" id="captcha" disabled/><br/><br/>
+            <input type="text" id="inputText"/><br/><br/>
+            <button onclick="generateCaptcha()">Refresh</button>
+            <button onclick="check()">Submit</button>
+        </div>
+        <br><br>
+<form action="/buy" class="login-form" method="post">
+    User Name:<br>
+    <input type="text" name="username" placeholder="user-name">
+    <br>
+    Product Id:<br>
+    <input type="number" name = "pId" placeholder="product id">
+    <br>
+    Your Bid:<br>
+    <input type="number" name="bid" placeholder="bid amount">
+    <br>
+    <input type="submit" value="Submit">
+</form>
     </div>
 </div>
-
-
-<p style="color: black;font-family:'DejaVu Sans Condensed' " align="center" >${errorMessage}</p>
+<p align="center" style="color: red">${errorMessage}</p>
 </body>
 </html>
