@@ -20,5 +20,20 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 7.0.85" level="application_server_libraries" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-8.0.9-rc" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/geronimo-spec-servlet-2.4-rc4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-5.1" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.46" level="project" />
+    <orderEntry type="library" name="jaf-1.1" level="project" />
+    <orderEntry type="library" name="mail" level="project" />
   </component>
 </module>
