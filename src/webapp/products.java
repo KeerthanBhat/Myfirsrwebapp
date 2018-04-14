@@ -29,7 +29,7 @@ public class products extends HttpServlet {
 
             Class.forName("com.mysql.jdbc.Driver");
 
-            connection = DriverManager.getConnection(connectionURL, "root", "keerthan@98");
+            connection = DriverManager.getConnection(connectionURL, "#", "#");
 
             String sql = "select * from auction_items where isSold = '0'";
 
@@ -84,7 +84,7 @@ public class products extends HttpServlet {
 
             Class.forName("com.mysql.jdbc.Driver");
 
-            connection = DriverManager.getConnection(connectionURL, "root", "keerthan@98");
+            connection = DriverManager.getConnection(connectionURL, "#", "#");
 
             String sql = "select * from auction_items where isSold = '0'";
 
